@@ -1,0 +1,136 @@
+name: JobMan CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-version: [8.1, 8.2, 8.3]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: mbstring, xml, ctype, iconv, intl, pdo, pdo_mysql, dom, filter, gd, json
+          coverage: xdebug
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install Composer dependencies
+        run: |
+          if [ -f composer.json ]; then
+            composer install --prefer-dist --no-progress --no-suggest --no-interaction
+          else
+            echo "No composer.json found, skipping composer install"
+          fi
+
+      - name: Check PHP syntax
+        run: |
+          find . -name "*.php" -not -path "./vendor/*" -exec php -l {} \;
+
+      - name: Run PHP Code Sniffer (if available)
+        run: |
+          if [ -f vendor/bin/phpcs ]; then
+            vendor/bin/phpcs --standard=PSR2 --ignore=vendor/ .
+          else
+            echo "PHP Code Sniffer not found, skipping code style check"
+          fi
+
+      - name: Run PHPUnit tests (if available)
+        run: |
+          if [ -f vendor/bin/phpunit ]; then
+            vendor/bin/phpunit
+          elif [ -f phpunit.xml ] || [ -f phpunit.xml.dist ]; then
+            php vendor/bin/phpunit
+          else
+            echo "No PHPUnit configuration found, skipping tests"
+          fi
+
+      - name: Check for security vulnerabilities
+        run: |
+          if [ -f composer.json ]; then
+            composer audit || true
+          fi
+
+  code-quality:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          extensions: mbstring, xml, ctype, iconv, intl, pdo, pdo_mysql, dom, filter, gd, json
+
+      - name: Install Composer dependencies
+        run: |
+          if [ -f composer.json ]; then
+            composer install --prefer-dist --no-progress --no-interaction
+          fi
+
+      - name: Run PHP Mess Detector (if available)
+        run: |
+          if [ -f vendor/bin/phpmd ]; then
+            vendor/bin/phpmd . text cleancode,codesize,controversial,design,naming,unusedcode --exclude vendor/
+          else
+            echo "PHP Mess Detector not found, skipping analysis"
+          fi
+
+      - name: Run PHP Copy/Paste Detector (if available)
+        run: |
+          if [ -f vendor/bin/phpcpd ]; then
+            vendor/bin/phpcpd --exclude=vendor .
+          else
+            echo "PHP Copy/Paste Detector not found, skipping analysis"
+          fi
+
+  security:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run security scanner
+        run: |
+          # Check for common security issues in PHP files
+          echo "Checking for common security vulnerabilities..."
+
+          # Check for SQL injection patterns
+          # Look specifically for mysql_query/mysqli_query calls that build queries via string concatenation
+          grep -rE "mysql_query\s*\([^;]*\"\s*\.\s*\$|mysqli_query\s*\([^;]*\"\s*\.\s*\$" --include="*.php" . && echo "Warning: Found potentially unsafe database queries (string-concatenated queries)" || true
+
+          # Check for XSS vulnerabilities
+          grep -R -nE 'echo\s*\$(_GET|_POST|_REQUEST|_COOKIE)' --include="*.php" . | grep -Ev 'htmlspecialchars|htmlentities' && echo "Warning: Found potential XSS vulnerabilities" || true
+
+          # Check for file inclusion vulnerabilities
+          grep -r "include.*\$\|require.*\$" --include="*.php" . && echo "Warning: Found potential file inclusion vulnerabilities" || true
+
+          echo "Security scan completed"
