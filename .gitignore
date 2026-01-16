@@ -1,0 +1,63 @@
+# Composer dependencies
+/vendor/
+composer.lock
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Log files
+*.log
+/logs/
+/storage/logs/
+
+# Cache directories
+/cache/
+/tmp/
+/temp/
+
+# Node.js dependencies (if using frontend build tools)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build directories
+/build/
+/dist/
+
+# Database files
+*.sqlite
+*.sqlite3
+*.db
+
+# PHP specific
+*.phar
+
+# Configuration files (uncomment if needed)
+# config.php
+# database.php
+
+# Uploads directory (uncomment if you have user uploads)
+# /uploads/
+
+# Session files
+/sessions/
+
