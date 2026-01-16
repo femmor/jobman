@@ -124,10 +124,11 @@ jobs:
           echo "Checking for common security vulnerabilities..."
 
           # Check for SQL injection patterns
-          grep -r "mysql_query\|mysqli_query" --include="*.php" . && echo "Warning: Found potentially unsafe database queries" || true
+          # Look specifically for mysql_query/mysqli_query calls that build queries via string concatenation
+          grep -rE "mysql_query\s*\([^;]*\"\s*\.\s*\$|mysqli_query\s*\([^;]*\"\s*\.\s*\$" --include="*.php" . && echo "Warning: Found potentially unsafe database queries (string-concatenated queries)" || true
 
           # Check for XSS vulnerabilities
-          grep -r "echo.*\$_" --include="*.php" . && echo "Warning: Found potential XSS vulnerabilities" || true
+          grep -R -nE 'echo\s*\$(_GET|_POST|_REQUEST|_COOKIE)' --include="*.php" . | grep -Ev 'htmlspecialchars|htmlentities' && echo "Warning: Found potential XSS vulnerabilities" || true
 
           # Check for file inclusion vulnerabilities
           grep -r "include.*\$\|require.*\$" --include="*.php" . && echo "Warning: Found potential file inclusion vulnerabilities" || true
