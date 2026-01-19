@@ -1,3 +1,3 @@
 <?php
 
-echo "Listings Page";
+loadView('listings/index');
