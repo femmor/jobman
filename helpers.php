@@ -13,14 +13,12 @@ function basePath($path = '')
 /**
  * Load a view
  * 
- * @param string $name  
+ * @param string $name   The name of the view
  * @return void
  */
-
 function loadView($name)
 {
-
-    $viewPath =  basePath("views/$name.view.php");
+    $viewPath = basePath("views/$name.view.php");
 
     // Check if the view file exists
     if (!file_exists($viewPath)) {
@@ -50,4 +48,31 @@ function loadPartial($name)
     }
 
     require $partialPath;
+}
+
+
+/**
+ * Inpect a value(s)
+ * @params mixed $value The value to inspect
+ * @return void
+ */
+function inspect($value)
+{
+    echo '<pre>';
+    var_dump($value);
+    echo '</pre>';
+}
+
+
+/**
+ * Inpect a value(s) and die
+ * @params mixed $value The value to inspect
+ * @return void
+ */
+function inspectAndDie($value)
+{
+    echo '<pre>';
+    var_dump($value);
+    echo '</pre>';
+    die();
 }
