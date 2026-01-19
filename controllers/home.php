@@ -1,3 +1,3 @@
 <?php
 
-echo "Welcome to the Home Page";
+loadView('home');
