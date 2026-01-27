@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * Router Initialization
+ */
+
 require '../helpers.php';
 
 require basePath('Router.php');
