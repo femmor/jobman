@@ -4,7 +4,7 @@
 <section>
     <div class="container mx-auto p-4 mt-4">
         <div class="text-center text-3xl mb-4 font-bold border border-gray-300 p-3">
-            404 Error
+            403 Error
         </div>
         <p class="text-center text-2xl mb-4">
             You do not have permission to access this page <br> <a class="text-blue-900" href="/">Go to Home</a>
