@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Router Class
+ */
+
 class Router
 {
     protected $routes = [];
