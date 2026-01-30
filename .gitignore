@@ -61,3 +61,7 @@ yarn-error.log*
 # Session files
 /sessions/
 
+# SQL files
+*.sql
+*.sql.gz
+*.sql.zip
