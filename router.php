@@ -2,11 +2,21 @@
 
 /**
  * Router Class
+ * 
  */
 
 class Router
 {
     protected $routes = [];
+
+    /**
+     * Register a route
+     * 
+     * @param string $method
+     * @param string $uri
+     * @param string $controller
+     * @return void
+     */
 
     public function registerRoute($method, $uri, $controller)
     {

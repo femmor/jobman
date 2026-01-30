@@ -1,5 +1,7 @@
 <?php
 
+/* Database Configuration */
+
 return [
     'host' => 'localhost',
     'port' => 3306,
