@@ -7,7 +7,7 @@
             404 Error
         </div>
         <p class="text-center text-2xl mb-4">
-            You do not have permission to access this page <br> <a class="text-blue-900" href="/">Go to Home</a>
+            This page could not be found. <br> <a class="text-blue-900" href="/">Go to Home</a>
         </p>
     </div>
 </section>

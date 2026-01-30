@@ -31,8 +31,7 @@ function loadView($name)
 
 
 /**
- * Load partials
- * Load a partial view
+ * Load a partial view file
  * 
  * @param string $name   The name of the partial view
  * @return void
@@ -52,7 +51,7 @@ function loadPartial($name)
 
 
 /**
- * Inpect a value(s)
+ * Inspect a value(s)
  * @params mixed $value The value to inspect
  * @return void
  */
@@ -65,7 +64,7 @@ function inspect($value)
 
 
 /**
- * Inpect a value(s) and die
+ * Inspect a value(s) and die
  * @params mixed $value The value to inspect
  * @return void
  */
