@@ -79,3 +79,17 @@ function inspectAndDie($value)
     echo '</pre>';
     die();
 }
+
+
+/**
+ * Format salary
+ * 
+ * @param string $salary
+ * @return string Formatted Salary
+ */
+
+function formatSalary($salary)
+{
+    // Format the salary with commas as thousand separators
+    return '$' . number_format(floatval($salary));
+}
