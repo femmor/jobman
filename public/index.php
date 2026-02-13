@@ -5,8 +5,15 @@
  */
 
 require '../helpers.php';
-require basePath('Framework/Database.php');
-require basePath('Framework/Router.php');
+
+// Register Autoloader for Framework Classes
+spl_autoload_register(function ($class) {
+    $path = basePath('Framework/' . str_replace('\\', '/', $class) . '.php');
+
+    if (file_exists($path)) {
+        require $path;
+    }
+});
 
 // Load Database Configuration
 $dbConfig = require basePath('config/db.php');
