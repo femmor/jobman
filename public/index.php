@@ -1,5 +1,7 @@
 <?php
 
+require __DIR__ . '/../vendor/autoload.php';
+
 /**
  * Router Initialization & Database Connection
  */
@@ -7,13 +9,13 @@
 require '../helpers.php';
 
 // Register Autoloader for Framework Classes
-spl_autoload_register(function ($class) {
-    $path = basePath('Framework/' . str_replace('\\', '/', $class) . '.php');
+// spl_autoload_register(function ($class) {
+//     $path = basePath('Framework/' . str_replace('\\', '/', $class) . '.php');
 
-    if (file_exists($path)) {
-        require $path;
-    }
-});
+//     if (file_exists($path)) {
+//         require $path;
+//     }
+// });
 
 // Load Database Configuration
 $dbConfig = require basePath('config/db.php');
