@@ -19,12 +19,15 @@ class Router
      * @return void
      */
 
-    public function registerRoute($method, $uri, $controller)
+    public function registerRoute($method, $uri, $action)
     {
+        list($controller, $controllerMethod) = explode('@', $action);
+
         $this->routes[] = [
             'method' => $method,
             'uri' => $uri,
-            'controller' => $controller
+            'controller' => $controller,
+            'controllerMethod' => $controllerMethod
         ];
     }
 
@@ -106,7 +109,17 @@ class Router
     {
         foreach ($this->routes as $route) {
             if ($route['uri'] === $uri && $route['method'] === $method) {
-                require basePath($route['controller']);
+                // Extract controller and controllerMethod from the route
+                $controller = 'App\\Controllers\\' . $route['controller'];
+                $controllerMethod = $route['controllerMethod'];
+
+                // Instantiate the controller and call the method
+                if (class_exists($controller) && method_exists($controller, $controllerMethod)) {
+                    $controllerInstance = new $controller();
+                    $controllerInstance->$controllerMethod();
+                } else {
+                    $this->loadError(500); // Internal Server Error if controller or method not found
+                }
                 return;
             }
         }
