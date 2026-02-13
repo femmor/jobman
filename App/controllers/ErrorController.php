@@ -8,26 +8,38 @@ class ErrorController
      * 404 not found error
      * @return void
      */
-    public function error404()
+    public static function notFound($message = 'Resource not found')
     {
-        loadView('error/404');
+        http_response_code(404);
+        loadView('error', [
+            'status' => 404,
+            'message' => $message
+        ]);
     }
 
     /**
      * 500 internal server error
      * @return void
      */
-    public function error500()
+    public static function serverError($message = 'An unexpected error occurred')
     {
-        loadView('error/500');
+        http_response_code(500);
+        loadView('error', [
+            'status' => 500,
+            'message' => $message
+        ]);
     }
 
     /**
-     * 403 forbidden error
+     * 403 unauthorized error
      * @return void
      */
-    public function error403()
+    public static function unauthorized($message = 'You are not authorized to access this resource')
     {
-        loadView('error/403');
+        http_response_code(403);
+        loadView('error', [
+            'status' => 403,
+            'message' => $message
+        ]);
     }
 }

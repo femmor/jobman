@@ -6,6 +6,8 @@
 
 namespace Framework;
 
+use App\Controllers\ErrorController;
+
 class Router
 {
     protected $routes = [];
@@ -84,16 +86,19 @@ class Router
     }
 
     /**
-     * Load Error 404 View
+     * Get error message based on HTTP code
      * @param int $httpCode
-     * @return void
+     * @return string
      */
-
-    public function loadError($httpCode = 404)
+    protected function getErrorMessage($httpCode)
     {
-        http_response_code($httpCode);
-        loadView("error/{$httpCode}");
-        exit();
+        $messages = [
+            404 => 'Resource not found',
+            500 => 'An unexpected error occurred',
+            403 => 'You are not authorized to access this resource'
+        ];
+
+        return $messages[$httpCode] ?? 'An error occurred';
     }
 
 
@@ -118,13 +123,13 @@ class Router
                     $controllerInstance = new $controller();
                     $controllerInstance->$controllerMethod();
                 } else {
-                    $this->loadError(500); // Internal Server Error if controller or method not found
+                    ErrorController::serverError(); // Internal Server Error if controller or method not found
                 }
                 return;
             }
         }
 
-        $this->loadError();
+        ErrorController::notFound();
         exit();
     }
 }
