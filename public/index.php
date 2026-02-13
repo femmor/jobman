@@ -5,8 +5,8 @@
  */
 
 require '../helpers.php';
-require basePath('Database.php');
-require basePath('Router.php');
+require basePath('Framework/Database.php');
+require basePath('Framework/Router.php');
 
 // Load Database Configuration
 $dbConfig = require basePath('config/db.php');

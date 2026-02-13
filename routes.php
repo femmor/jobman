@@ -5,10 +5,10 @@
  * @return array
  */
 
-$router->get('/', 'controllers/home.php');
-$router->get('/login', 'controllers/login.php');
-$router->get('/register', 'controllers/register.php');
-$router->get('/listings', 'controllers/listings/index.php');
-$router->get('/listings/create', 'controllers/listings/create.php');
-$router->get('/listing', 'controllers/listings/show.php');
-$router->get('404', 'controllers/error/404.php');
+$router->get('/', 'App/controllers/home.php');
+$router->get('/login', 'App/controllers/login.php');
+$router->get('/register', 'App/controllers/register.php');
+$router->get('/listings', 'App/controllers/listings/index.php');
+$router->get('/listings/create', 'App/controllers/listings/create.php');
+$router->get('/listing', 'App/controllers/listings/show.php');
+$router->get('404', 'App/controllers/error/404.php');
