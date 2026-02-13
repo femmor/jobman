@@ -5,12 +5,19 @@
  * @return array
  */
 
+// Home route
 $router->get('/', 'HomeController@index');
 
-// $router->get('/', 'controllers/home.php');
-// $router->get('/login', 'controllers/login.php');
-// $router->get('/register', 'controllers/register.php');
-// $router->get('/listings', 'controllers/listings/index.php');
-// $router->get('/listings/create', 'controllers/listings/create.php');
-// $router->get('/listing', 'controllers/listings/show.php');
-// $router->get('404', 'controllers/error/404.php');
+// Auth routes
+$router->get('/login', 'AuthController@login');
+$router->get('/register', 'AuthController@register');
+
+// Listings routes
+$router->get('/listings', 'ListingController@index');
+$router->get('/listings/create', 'ListingController@create');
+$router->get('/listing', 'ListingController@show');
+
+// Error routes
+$router->get('/404', 'ErrorController@error404');
+$router->get('/500', 'ErrorController@error500');
+$router->get('/403', 'ErrorController@error403');
