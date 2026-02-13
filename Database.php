@@ -38,6 +38,7 @@ class Database
     public function query($query, $params = [])
     {
         try {
+            // Use prepared statements to prevent SQL injection
             $stmt = $this->conn->prepare($query);
             // Bind named params
             foreach ($params as $key => $value) {
