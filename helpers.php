@@ -14,9 +14,10 @@ function basePath($path = '')
  * Load a view
  * 
  * @param string $name   The name of the view
+ * @param array  $data   Data to be extracted for the view
  * @return void
  */
-function loadView($name)
+function loadView($name, $data = [])
 {
     $viewPath = basePath("views/$name.view.php");
 
@@ -25,6 +26,9 @@ function loadView($name)
         echo "View file not found: $viewPath";
         throw new Exception("View file not found: $viewPath");
     }
+
+    // Extract data to make variables available to the view
+    extract($data);
 
     require $viewPath;
 }
@@ -74,4 +78,18 @@ function inspectAndDie($value)
     var_dump($value);
     echo '</pre>';
     die();
+}
+
+
+/**
+ * Format salary
+ * 
+ * @param string $salary
+ * @return string Formatted Salary
+ */
+
+function formatSalary($salary)
+{
+    // Format the salary with commas as thousand separators
+    return '$' . number_format(floatval($salary));
 }
