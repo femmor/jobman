@@ -15,6 +15,10 @@ class ListingController
         $this->db = new Database($config);
     }
 
+    /**
+     * Listing controller index method
+     * @return void
+     */
     public function index()
     {
         // Fetches job listings
@@ -23,11 +27,19 @@ class ListingController
         loadView('listings/index', ['listings' => $listings]);
     }
 
+    /**
+     * Listing controller create method
+     * @return void
+     */
     public function create()
     {
         loadView('listings/create');
     }
 
+    /**
+     * Listing controller show method
+     * @return void
+     */
     public function show()
     {
         // Get the listing ID from the query parameters

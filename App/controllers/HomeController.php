@@ -14,6 +14,10 @@ class HomeController
         $this->db = new Database($config);
     }
 
+    /**
+     * Home controller index method
+     * @return void
+     */
     public function index()
     {
         // Fetches job listings
