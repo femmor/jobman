@@ -2,8 +2,9 @@
 
 /**
  * Router Class
- * 
  */
+
+namespace Framework;
 
 class Router
 {

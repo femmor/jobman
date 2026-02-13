@@ -1,5 +1,6 @@
 <?php
 
+// Autoloading using Composer (PSR-4 compliant)
 require __DIR__ . '/../vendor/autoload.php';
 
 /**
@@ -7,6 +8,9 @@ require __DIR__ . '/../vendor/autoload.php';
  */
 
 require '../helpers.php';
+
+use Framework\Database;
+use Framework\Router;
 
 // Register Autoloader for Framework Classes
 // spl_autoload_register(function ($class) {

@@ -1,5 +1,16 @@
 <?php
 
+namespace Framework;
+
+/**
+ * Another solution for the global namespace issue is to use 'use PDO' at the top of the file, which allows us to refer to PDO without the global namespace prefix.
+ * 
+ * use PDO;
+ * use PDOException;
+ * use Exception;
+ * use PDOStatement;
+ */
+
 class Database
 {
     public $conn;
@@ -15,15 +26,15 @@ class Database
         $dsn = "mysql:host={$config['host']};port={$config['port']};dbname={$config['dbname']}";
 
         $options = [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
-            PDO::ATTR_EMULATE_PREPARES => false,
+            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+            \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ,
+            \PDO::ATTR_EMULATE_PREPARES => false,
         ];
 
         try {
-            $this->conn = new PDO($dsn, $config['username'], $config['password'], $options);
-        } catch (PDOException $e) {
-            throw new Exception('Database connection failed: ' . $e->getMessage());
+            $this->conn = new \PDO($dsn, $config['username'], $config['password'], $options);
+        } catch (\PDOException $e) {
+            throw new \Exception('Database connection failed: ' . $e->getMessage());
         }
     }
 
@@ -32,8 +43,8 @@ class Database
      *  Query the database
      * 
      * @param string $query
-     * @return PDOStatement
-     * @throws PDOException
+     * @return \PDOStatement
+     * @throws \PDOException
      */
     public function query($query, $params = [])
     {
@@ -47,8 +58,8 @@ class Database
 
             $stmt->execute();
             return $stmt;
-        } catch (PDOException $e) {
-            throw new Exception('Query failed to execute: ' . $e->getMessage());
+        } catch (\PDOException $e) {
+            throw new \Exception('Query failed to execute: ' . $e->getMessage());
         }
     }
 }
