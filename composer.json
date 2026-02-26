@@ -1,0 +1,16 @@
+{
+  "name": "femmor/jobman-php",
+  "description": "Job listing application",
+  "authors": [
+    {
+      "name": "Emmanuel Egomson",
+      "email": "fegomson@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Framework\\": "Framework/",
+      "App\\": "App/"
+    }
+  }
+}

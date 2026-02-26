@@ -2,13 +2,20 @@
 
 /**
  * Define application routes
- * @return array
+ * Registers application routes on the provided router instance.
+ *
+ * @return void
  */
 
-$router->get('/', 'controllers/home.php');
-$router->get('/login', 'controllers/login.php');
-$router->get('/register', 'controllers/register.php');
-$router->get('/listings', 'controllers/listings/index.php');
-$router->get('/listings/create', 'controllers/listings/create.php');
-$router->get('/listing', 'controllers/listings/show.php');
-$router->get('404', 'controllers/error/404.php');
+// Home route
+$router->get('/', 'HomeController@index');
+
+// Auth routes
+$router->get('/login', 'AuthController@login');
+$router->get('/register', 'AuthController@register');
+
+// Listings routes
+$router->get('/listings', 'ListingController@index');
+$router->get('/listings/create', 'ListingController@create');
+$router->get('/listings/{id}', 'ListingController@show');
+$router->get('/listing/{id}', 'ListingController@show'); // Backward-compatible alias
