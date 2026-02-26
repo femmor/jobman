@@ -1,7 +1,14 @@
 <?php
 
 // Autoloading using Composer (PSR-4 compliant)
-require __DIR__ . '/../vendor/autoload.php';
+$autoloadPath = __DIR__ . '/../vendor/autoload.php';
+
+if (!file_exists($autoloadPath)) {
+    http_response_code(500);
+    exit('Dependencies are missing. Run "composer install" and try again.');
+}
+
+require $autoloadPath;
 
 /**
  * Router Initialization & Database Connection
@@ -31,7 +38,7 @@ $db = new Database($dbConfig);
 $router = new Router();
 
 // Load Routes
-$routes = require basePath('routes.php');
+require basePath('routes.php');
 
 // Register Routes
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);

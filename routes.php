@@ -2,7 +2,9 @@
 
 /**
  * Define application routes
- * @return array
+ * Registers application routes on the provided router instance.
+ *
+ * @return void
  */
 
 // Home route

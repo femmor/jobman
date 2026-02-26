@@ -117,10 +117,9 @@ class Router
     public function route($uri)
     {
         $requestMethod = strtoupper($_SERVER['REQUEST_METHOD']);
+        $uriSegments = explode('/', trim($uri, '/'));
 
         foreach ($this->routes as $route) {
-            // Split the incoming URI into segments
-            $uriSegments = explode('/', trim($uri, '/'));
             // Split the route URI into segments
             $routeSegments = explode('/', trim($route['uri'], '/'));
 
@@ -172,13 +171,13 @@ class Router
 
                     $reflectionMethod->invokeArgs($controllerInstance, $args);
                 } else {
-                    ErrorController::serverError(); // Internal Server Error if controller or method not found
+                    ErrorController::serverError($this->getErrorMessage(500));
                 }
                 return;
             }
         }
 
-        ErrorController::notFound();
+        ErrorController::notFound($this->getErrorMessage(404));
         exit();
     }
 }
